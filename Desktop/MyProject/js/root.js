@@ -10,6 +10,7 @@ myApp.config(function($routeProvider){
 myApp.factory('myGrid', function(){
 	var grid = {};
 	var rootDiv = document.getElementById("myGridId");
+	var preScrollTopPosition = 0;
 	grid.tableHeader = function(gridObject){		
 		grid.HeaderRow(gridObject);
 	};
@@ -24,7 +25,8 @@ myApp.factory('myGrid', function(){
 			document.getElementById(gridObject.headerDivId).scrollLeft = body.scrollLeft;
 			document.getElementById(gridObject.dataDisplayDiv).scrollLeft = body.scrollLeft;
 		}
-		if(body.scrollTop){
+		if(body.scrollTop >= 0 && body.scrollTop != this.preScrollTopPosition){
+			this.preScrollTopPosition = body.scrollTop;
 			var index = Math.floor(body.scrollTop/gridObject.cellHeight);
 			var maxRowLen = gridObject.gridBodyHeight/ gridObject.cellHeight;
 			var bodySubDiv = document.getElementById(gridObject.dataDisplayDiv);
